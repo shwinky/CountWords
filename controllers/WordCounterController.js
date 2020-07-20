@@ -4,8 +4,8 @@ const UrlService = require('../services/UrlService');
 const FileService = require('../services/FileService');
 const RamPersistWordCounters = require('../providers/RamPersistWordCounters');
 const RedisPersist = require('../providers/RedisProvider');
-const persistProvider = new RamPersistWordCounters();
-//const persistProvider = new RedisPersist({host:"localhost"});
+//const persistProvider = new RamPersistWordCounters();
+const persistProvider = new RedisPersist({host:"localhost"});
 class WordCounterController {
     async handleWordCountRequest(req,res){
         try {
