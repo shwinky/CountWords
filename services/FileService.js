@@ -5,11 +5,14 @@ class FileService{
         this._persistProvider = persistProvider;
     }
     async countWords(filePath){
-        await this.readChunks(filePath);
+        if(fs.existsSync(filePath)){
+            await this.readChunks(filePath);
+            console.log('No such file in the system')
+        }
     }
 
     async readChunks(filePath){
-        return new Promise(resolve =>{
+        return new Promise(function(resolve,reject){
             const stream = fs.createReadStream(filePath, {encoding: 'utf8'});
             stream.on('data', data => {
                 const line = data.toString();
@@ -20,7 +23,7 @@ class FileService{
             stream.on('close', () => {;
                 resolve();
             });
-        })
+        }).catch(function(e){console.log(e)});
     }
 }
 
