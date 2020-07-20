@@ -7,11 +7,16 @@ class UrlService{
         this._persistProvider = persistProvider;
     }
     async countWords(url){
-        const urlResponse = await getAsync({url:url});
-        const body = _.get(urlResponse,'body');
-        if(body){
-            const words = body.split(' ');
-            words.forEach((word)=> this._persistProvider.add(word));
+        try {
+            const urlResponse = await getAsync({url:url});
+            const body = _.get(urlResponse,'body');
+            if(body){
+                const words = body.split(' ');
+                words.forEach((word)=> this._persistProvider.add(word));
+            }
+        }
+        catch(err){
+            console.log(err);
         }
 
     }
